@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-black-box
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: hello-world.info
+      http:
+        paths:
+          - path: /blackbox/.*
+            pathType: Prefix
+            backend:
+              service:
+                name: testing-prometheus-blackbox-exporter
+                port:
+                  number: 9115
